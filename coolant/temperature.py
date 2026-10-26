@@ -65,7 +65,7 @@ def save_theta(theta, n, dt, nr, nz, file_path):
 def theta_euler(theta, dt, nt, u_r, u_z, dr, dz, r_f, r_c, nr, nz, Re, Pr, save_every, folder):
 
     os.makedirs(folder, exist_ok=True)
-    file_path = os.path.join(folder, "theta_evolution.txt")
+    file_path = os.path.join(folder, "temperature_evolution.txt")
     start_file(file_path, nr, nz, dt)
     save_theta(theta, 0, dt, nr, nz, file_path)
 
