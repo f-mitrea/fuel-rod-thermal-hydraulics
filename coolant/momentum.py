@@ -55,3 +55,15 @@ def compute_rhs_v_z(v_r, v_z, theta, dr, dz, r_f, r_c, nr, nz, Re, Gr):
     rhs_z = -(convection_r + convection_z) + coeff * (diffusion_r + diffusion_z) + coeff_forcing * forcing
 
     return rhs_z
+
+
+def chorin_euler_step(v_r, v_z, theta, dt, dr, dz, r_f, r_c, nr, nz, Re, Gr):
+    v_r, v_z = apply_bc_velocity(v_r, v_z, nr, nz)
+
+    rhs_r = compute_rhs_v_r(v_r, v_z, dr, dz, r_f, r_c, nr, nz, Re)
+    rhs_z = compute_rhs_v_z(v_r, v_z, theta, dr, dz, r_f, r_c, nr, nz, Re, Gr)
+
+    v_r[1:nr, 1:nz + 1] += dt * rhs_r[1:nr, 1:nz + 1]
+    v_z[1:nr + 1, 1:nz] += dt * rhs_z[1:nr + 1, 1:nz]
+
+    return v_r, v_z
