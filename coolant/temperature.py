@@ -1,6 +1,6 @@
 import numpy as np
 
-from boundary import apply_bc_theta
+from coolant.boundary import apply_bc_theta
 
 
 def compute_rhs_theta(theta, u_r, u_z, dr, dz, r_f, r_c, nr, nz, Re, Pr):
@@ -28,11 +28,11 @@ def compute_rhs_theta(theta, u_r, u_z, dr, dz, r_f, r_c, nr, nz, Re, Pr):
 
 
 def theta_euler_step(theta, dt, u_r, u_z, dr, dz, r_f, r_c, nr, nz, Re, Pr):
-    theta = apply_bc_theta(theta, nr, nz)
+    theta = apply_bc_theta(theta, nr, nz, dr)
 
     rhs_theta = compute_rhs_theta(theta, u_r, u_z, dr, dz, r_f, r_c, nr, nz, Re, Pr)
 
     theta[1:nr + 1, 1:nz + 1] += dt * rhs_theta[1:nr + 1, 1:nz + 1]
-    theta = apply_bc_theta(theta, nr, nz)
+    theta = apply_bc_theta(theta, nr, nz, dr)
 
     return theta

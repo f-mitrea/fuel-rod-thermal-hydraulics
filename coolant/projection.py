@@ -1,6 +1,6 @@
 import numpy as np
 
-from poisson import solve_poisson_gauss_seidel, vector_to_phi
+from coolant.poisson import solve_poisson_gauss_seidel, vector_to_phi
 
 
 def compute_divergence_of_v(v_r, v_z, dr, dz, r_f, r_c, nr, nz):

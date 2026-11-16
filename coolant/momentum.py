@@ -1,6 +1,6 @@
 import numpy as np
 
-from boundary import apply_bc_velocity
+from coolant.boundary import apply_bc_velocity
 
 
 def compute_rhs_v_r(v_r, v_z, dr, dz, r_f, r_c, nr, nz, Re):

@@ -3,11 +3,11 @@ import glob
 
 import numpy as np
 
-from temperature import theta_euler_step
-from momentum import chorin_euler_step
-from poisson import build_poisson_matrix, build_gauss_seidel_matrices
-from projection import project_velocity, compute_divergence_of_v
-from output_vtk import save_vtk
+from coolant.temperature import theta_euler_step
+from coolant.momentum import chorin_euler_step
+from coolant.poisson import build_poisson_matrix, build_gauss_seidel_matrices
+from coolant.projection import project_velocity, compute_divergence_of_v
+from coolant.output_vtk import save_vtk
 
 
 def run_simulation(theta, u_r, u_z, dt, nt, dr, dz, r_f, r_c, z_c, nr, nz, Re, Pr, Gr,
