@@ -8,7 +8,6 @@ from coupling.coupling import compute_cladding_wall_temperature, solve_rod
 from coupling.output_vtk import save_rod_vtk
 
 
-# Fuel rod (dimensional, SI units)
 R_pellet = 4.0e-3
 R_clad = 4.6e-3
 q_vol = 2.75e6
@@ -17,7 +16,6 @@ k_UO2 = 2.3
 n_nodes_pellet = 100
 n_nodes_clad = 20
 
-# Coolant (dimensional, SI units)
 R_outer = 9.2e-3
 height = 4.6e-3
 T_inf = 560.0
@@ -27,7 +25,6 @@ beta = 2.0e-4
 nu = 7.0e-7
 alpha = 1.0e-6
 
-# Numerical parameters of the coolant solver (dimensionless)
 nr, nz = 32, 8
 dt = 0.005
 nt = 30000
