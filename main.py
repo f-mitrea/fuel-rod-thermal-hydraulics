@@ -36,10 +36,8 @@ max_iter = 100000
 save_every = 500
 folder = "output"
 
-# Step 1: fuel rod -> coolant (heat flux leaving the cladding)
 q_wall = compute_wall_heat_flux(q_vol, R_pellet, R_clad)
 
-# Step 2: reference scales and dimensionless numbers
 length_ref, delta_T, u_ref = compute_reference_scales(q_wall, R_clad, R_outer, k_fluid, g, beta)
 Pr, Gr, Ra, Re = compute_dimensionless_numbers(length_ref, delta_T, u_ref, g, beta, nu, alpha)
 
@@ -52,22 +50,17 @@ print(f"reference length = {length_ref:.4e} m, reference temperature difference 
       f"reference velocity = {u_ref:.4e} m/s")
 print(f"Pr = {Pr:.4f}, Gr = {Gr:.4e}, Ra = {Ra:.4e}, Re = {Re:.4f}")
 
-# Step 3: coolant (dimensionless)
 dr, dz, r_c, z_c, r_f, z_f = make_grid(r_min, r_max, z_max, nr, nz)
 
 theta = np.zeros((nr + 2, nz + 2))
 u_r = np.zeros((nr + 2, nz + 2))
 u_z = np.zeros((nr + 2, nz + 2))
 
-theta, u_r, u_z = run_simulation(theta, u_r, u_z, dt, nt, dr, dz, r_f, r_c, z_c, nr, nz, Re, Pr, Gr,
-                                 tol, max_iter, save_every, folder)
+theta, u_r, u_z = run_simulation(theta, u_r, u_z, dt, nt, dr, dz, r_f, r_c, z_c, nr, nz, Re, Pr, Gr, tol, max_iter, save_every, folder)
 
-# Step 4: coolant -> fuel rod (temperature of the cladding outer surface)
 T_clad_outer = compute_cladding_wall_temperature(theta, nz, T_inf, delta_T)
 
-# Step 5: fuel rod (dimensional), one radial profile for each axial cell
-T_interface, T_centre, radius_rod, T_rod = solve_rod(T_clad_outer, nz, q_vol, q_wall, R_pellet, R_clad, k_clad, k_UO2,
-                                                      n_nodes_clad, n_nodes_pellet)
+T_interface, T_centre, radius_rod, T_rod = solve_rod(T_clad_outer, nz, q_vol, q_wall, R_pellet, R_clad, k_clad, k_UO2, n_nodes_clad, n_nodes_pellet)
 
 filename = save_rod_vtk(radius_rod, z_c, T_rod, nz, length_ref, T_inf, delta_T, folder)
 print(f"saved {filename}")
