@@ -27,12 +27,12 @@ def compute_rhs_theta(theta, u_r, u_z, dr, dz, r_f, r_c, nr, nz, Re, Pr):
     return rhs_theta
 
 
-def theta_euler_step(theta, dt, u_r, u_z, dr, dz, r_f, r_c, nr, nz, Re, Pr):
-    theta = apply_bc_theta(theta, nr, nz, dr)
+def theta_euler_step(theta, theta_wall, dt, u_r, u_z, dr, dz, r_f, r_c, nr, nz, Re, Pr):
+    theta = apply_bc_theta(theta, nr, nz, theta_wall)
 
     rhs_theta = compute_rhs_theta(theta, u_r, u_z, dr, dz, r_f, r_c, nr, nz, Re, Pr)
 
     theta[1:nr + 1, 1:nz + 1] += dt * rhs_theta[1:nr + 1, 1:nz + 1]
-    theta = apply_bc_theta(theta, nr, nz, dr)
+    theta = apply_bc_theta(theta, nr, nz, theta_wall)
 
     return theta

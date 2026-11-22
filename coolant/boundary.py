@@ -1,7 +1,7 @@
-def apply_bc_theta(theta, nr, nz, dr):
+def apply_bc_theta(theta, nr, nz, theta_wall):
 
     for j in range(1, nz + 1):
-        theta[0, j] = theta[1,j] + dr
+        theta[0, j] = 2 * theta_wall[j] - theta[1, j]
         theta[nr + 1, j] = - theta[nr, j]
 
     for i in range(1, nr + 1):
